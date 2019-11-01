@@ -29,6 +29,8 @@ for env in "${to_track[@]}"; do
     fi
 done
 logInfo "Login to kubernetes cluster..."
+
+echo $PLUGIN_RANCHER_URL
 rancher login $PLUGIN_RANCHER_URL --token $PLUGIN_RANCHER_TOKEN
 
 
