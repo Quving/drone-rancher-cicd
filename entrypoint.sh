@@ -29,8 +29,14 @@ for env in "${to_track[@]}"; do
     fi
 done
 
+if [ "${PLUGIN_RANCHER_CONTEXT}" = "" ]; then
+    RANCHER_OPTIONS=""
+else
+    RANCHER_OPTIONS="--context $PLUGIN_RANCHER_CONTEXT"
+fi
+
 logInfo "Login to kubernetes cluster..."
-rancher login $PLUGIN_RANCHER_URL --token $PLUGIN_RANCHER_TOKEN
+rancher login $PLUGIN_RANCHER_URL --token $PLUGIN_RANCHER_TOKEN $RANCHER_OPTIONS
 
 # == Deployment ==
 logInfo "Upgrade $PLUGIN_KUBERNETES_DEPLOYMENT."
