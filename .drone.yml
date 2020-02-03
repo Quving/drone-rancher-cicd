@@ -4,7 +4,8 @@ steps:
 - name: publish
   image: plugins/docker
   settings:
-    repo: pingu/drone-plugin-rancher-deploy
+    repo:
+      from_secret: docker_repository
     tags: latest
     username:
       from_secret: docker_username
