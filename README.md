@@ -17,7 +17,7 @@ This repository provides a plugin for [Rancher-Deployment](https://rancher.com/)
 ``` yml
 ...
 - name: deploy
-  image: pingu/drone-plugin-rancher-deploy:latest
+  image: quving/drone-rancher-cicd:latest
   settings:
     stamp: ${DRONE_COMMIT}
     kubernetes_deployment: <YOUR-K8S-DEPLOYMENT>
