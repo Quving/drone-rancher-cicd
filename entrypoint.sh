@@ -41,7 +41,13 @@ fi
 
 # Rancher login
 logInfo "Login to kubernetes cluster..."
-rancher login $RANCHER_URL --token $RANCHER_TOKEN $RANCHER_OPTIONS > /dev/null 2>&1
+if [ "${PLUGIN_DEBUG}" = "true" ]; then
+    rancher login $RANCHER_URL --token $RANCHER_TOKEN $RANCHER_OPTIONS
+elif [ "${DEBUG}" = "true" ]; then
+    rancher login $RANCHER_URL --token $RANCHER_TOKEN $RANCHER_OPTIONS
+else
+    rancher login $RANCHER_URL --token $RANCHER_TOKEN $RANCHER_OPTIONS > /dev/null 2>&1
+fi
 
 # If login failed.
 if [ ! "$(echo $?)" == 0 ]; then
