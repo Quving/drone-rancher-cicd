@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 function  logInfo() {
     color=`tput setaf 2`
@@ -67,7 +66,10 @@ for workload in "${ADDR[@]}"; do # access each element of array
     # If upgrade failed.
     if [ ! "$(echo $?)" == 0 ]; then
         logError "Error occured while upgrading k8s deployment ($workload). Please check the logs below."
+        printf "\n"
         cat error.log
+        printf "\n"
+        logError "Deployment failed."
         exit 1
     fi
     rancher kubectl $KUBECTL_OPTIONS rollout status deployments/$workload -n $KUBERNETES_NAMESPACE -w
