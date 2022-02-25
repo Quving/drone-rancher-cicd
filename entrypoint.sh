@@ -62,6 +62,7 @@ read -ra ADDR <<< "$KUBERNETES_DEPLOYMENT" # str is read into an array as tokens
 for workload in "${ADDR[@]}"; do # access each element of array
     logInfo "Upgrade $workload..."
     rancher kubectl $KUBECTL_OPTIONS set env deployments/$workload -n $KUBERNETES_NAMESPACE GIT_HASH=$STAMP > error.log 2>&1
+    rancher kubectl $KUBECTL_OPTIONS rollout status deployments/$workload -n $KUBERNETES_NAMESPACE -w
 
     # If upgrade failed.
     if [ ! "$(echo $?)" == 0 ]; then
@@ -72,7 +73,6 @@ for workload in "${ADDR[@]}"; do # access each element of array
         logError "Deployment failed."
         exit 1
     fi
-    rancher kubectl $KUBECTL_OPTIONS rollout status deployments/$workload -n $KUBERNETES_NAMESPACE -w
 done
 logInfo "Upgrade succeeded."
 
