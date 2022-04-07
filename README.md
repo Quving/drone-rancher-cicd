@@ -3,29 +3,51 @@ A drone plugin used for Rancher (Kubernetes) deployments.
 
 [![Build Status](https://drone.quving.com/api/badges/Quving/drone-plugin-rancher-deploy/status.svg)](https://drone.quving.com/Quving/drone-plugin-rancher-deploy)
 
-<img src="https://i.imgur.com/Sv1Oqiu.png" width="300"/> <img src="https://i.imgur.com/pAUfyq2.png" width="200"/> <img src="https://i.imgur.com/8uWbpgZ.png" width="350"/>
-
-
 ## What's in this repository?
-This repository provides a plugin for [Rancher-Deployment](https://rancher.com/) on [Drone-Ci](https://google.com). Rancher is developer friendly container platform for docker orchestration. Working on any cloud, easy to set up, simple to use.
-
+This repository provides a plugin for [Rancher-Deployment](https://rancher.com/) on [Drone-Ci](https://www.drone.io/). Rancher is developer friendly container platform for docker orchestration. Working on any cloud, easy to set up, simple to use.
 
 
 ## Example configuration
 
-### Drone v0.8.*
-``` yml
+### .drone.yml
+``` yaml
 ...
+---
+kind: pipeline
+name: pipeline
+type: docker
+steps:
+- name: build and publish
+  image: plugins/docker
+  settings:
+    repo:
+      from_secret: docker_repository
+    tags:
+      - ${DRONE_BRANCH}
+    dockerfile: Dockerfile
+    registry:
+      from_secret: docker_registry
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  when:
+    status: [ success ]
+    branch: [ master ]
+
 - name: deploy
   image: quving/drone-rancher-cicd:latest
   settings:
     stamp: ${DRONE_COMMIT}
-    kubernetes_deployment: <YOUR-K8S-DEPLOYMENT>
-    kubernetes_namespace: <YOUR-NAMESPACE>
+    kubectl_options: --insecure-skip-tls-verify
+    kubernetes_deployment: service-api,service-worker
+    kubernetes_namespace: ${DRONE_BRANCH}
     rancher_url:
-      from_secret: <RANCHER_URL>
+      from_secret: rancher_url
     rancher_token:
-      from_secret: <RANCHER_TOKEN>
+      from_secret: rancher_token
+    rancher_context:
+      from_secret: rancher_context
   when:
     status: [ success ]
     branch: [ master ]
