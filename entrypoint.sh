@@ -17,7 +17,7 @@ function  logWarn() {
 
 # Check envs
 logInfo "Check environment variables..."
-to_track=( PLUGIN_RANCHER_URL PLUGIN_RANCHER_TOKEN PLUGIN_KUBERNETES_DEPLOYMENT PLUGIN_KUBERNETES_NAMESPACE PLUGIN_STAMP PLUGIN_KUBECTL_OPTIONS )
+to_track=( PLUGIN_RANCHER_URL PLUGIN_RANCHER_TOKEN PLUGIN_KUBERNETES_DEPLOYMENT PLUGIN_KUBERNETES_NAMESPACE PLUGIN_STAMP )
 for env in "${to_track[@]}"; do
     if [ "${!env}" = "" ]; then
        	logError "Please set a value for $env"
