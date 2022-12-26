@@ -7,7 +7,21 @@ A drone plugin used for Rancher (Kubernetes) deployments.
 This repository provides a plugin for [Rancher-Deployment](https://rancher.com/) on [Drone-Ci](https://www.drone.io/). Rancher is developer friendly container platform for docker orchestration. Working on any cloud, easy to set up, simple to use.
 
 
-## Example configuration
+## Example Configuration
+
+### Docker-Container
+```bash
+docker run --rm \
+    -it \
+    -e PLUGIN_RANCHER_TOKEN='token-qvgg6:f4ksxq65sqnrkztnc671xk9nghjcxjdr42g64f6gqvzmp6lmsvdtrx' \
+    -e PLUGIN_RANCHER_URL='https://rancher.server.com/v3' \
+    -e PLUGIN_RANCHER_CONTEXT='c-m-znt28nds:p-4lzpp' \
+    -e PLUGIN_KUBERNETES_DEPLOYMENT='nginx-web-1312' \
+    -e PLUGIN_KUBERNETES_NAMESPACE='landingpage' \
+    -e PLUGIN_STAMP='test' \
+    -e DEBUG='true' \
+    image: quving/drone-rancher-cicd:latest
+```
 
 ### .drone.yml
 ``` yaml
@@ -53,3 +67,4 @@ steps:
     branch: [ master ]
 ...
 ```
+
