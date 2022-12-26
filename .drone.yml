@@ -1,5 +1,7 @@
 kind: pipeline
+type: docker
 name: pipeline
+
 steps:
 - name: publish
   image: plugins/docker
@@ -12,8 +14,7 @@ steps:
     password:
       from_secret: docker_password
   when:
-    status: [ success ]
-    branch: [ master ]
+    event: [ push ]
 
 - name: publish tag
   image: plugins/docker
