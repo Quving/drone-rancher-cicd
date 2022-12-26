@@ -20,7 +20,7 @@ docker run --rm \
     -e PLUGIN_KUBERNETES_NAMESPACE='landingpage' \
     -e PLUGIN_STAMP='test' \
     -e DEBUG='true' \
-    image: quving/drone-rancher-cicd:latest
+    quving/drone-rancher-cicd:latest
 ```
 
 ### .drone.yml
